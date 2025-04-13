@@ -1,6 +1,6 @@
 // Set custom host and port values here
-const customHost = "Coolboy_m4.aternos.me"; // Change this to whatever you want
-const customPort = "15524";        // Change this to whatever you want
+const customHost = "free-in04.ateex.cloud"; // Change this to whatever you want
+const customPort = "19183";        // Change this to whatever you want
 
 // Display the values
 document.getElementById("host").innerText = customHost; // Or use window.location.hostname for the real Replit host
