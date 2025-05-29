@@ -5,27 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coolboy's Website</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <h1>Welcome to My Website</h1>
+        <h1>Thanks For Visiting</h1>
     </header>
     <main>
-        
-        <!-- IP and Port Section -->
-        <div class="server-info">
-            <h2>Minecraft Server</h2>
-            <p>Ip: <span id="host">loading...</span> <button onclick="copyText('host')">Copy</button></p>
-            <p>Port: <span id="port">loading...</span> <button onclick="copyText('port')">Copy</button></p>
-        </div>
-
-        <!-- About Me Section -->
         <div class="about-me">
             <h2>About Me</h2>
-            <p><span class="about-text">Hi, I’m "Coolboy"! I love Coding, Gaming And Editing.</span></p>
+            <p class="about-text">Hi, I’m Coolboy! I love Coding, Gaming, and Editing.</p>
         </div>
-
-        <!-- Favorite Games Section -->
         <div class="favorite-games">
             <h2>Favorite Games</h2>
             <ul>
@@ -33,23 +23,120 @@
                 <li><span class="game-text">Genshin Impact</span></li>
                 <li><span class="game-text">DB Legends</span></li>
                 <li><span class="game-text">Pubg Mobile</span></li>
-                <li><span class="game-text">Free Fire</span></li>
+                <li><span class="game-text">Free Fire Max</span></li>
                 <li><span class="game-text">And Survival Games</span></li>
             </ul>
         </div>
-
-        <!-- Social Media Section -->
+        <div class="anime-section">
+            <h2>Anime List English</h2>
+            <input type="checkbox" id="toggle-anime" class="toggle-checkbox">
+            <label for="toggle-anime" class="toggle-button"></label>
+            <div id="anime-list" class="anime-list">
+                <div class="genre-section">
+                    <h3>OverPowered MC</h3>
+                    <input type="checkbox" id="toggle-genre-opmc" class="toggle-checkbox">
+                    <label for="toggle-genre-opmc" class="toggle-button"></label>
+                    <ul id="genre-list-opmc" class="genre-list">
+                        <li>
+                            <span class="anime-text">Wise Man's Grandchild</span>
+                            <a href="/anime/wise-mans-grandchild-ep1.mp4" class="download-button">Download</a>
+                            <p class="anime-plot"><strong>Plot:</strong> A young man dies in an accident and is reincarnated in a magical world as a baby. Raised by a legendary wizard, he grows up with extraordinary magical abilities, navigating school life and epic battles with his overpowered skills.</p>
+                            <p class="mc-info"><strong>MC: Shin Wolford</strong> - Overpowered. Shin has exceptional magical abilities, mastering complex spells far beyond his peers, and often overwhelms enemies with his intelligence and raw power.</p>
+                        </li>
+                        <li>
+                            <span class="anime-text">Combatants Will Be Dispatched!</span>
+                            <a href="/anime/combatants-dispatched-ep1.mp4" class="download-button">Download</a>
+                            <p class="anime-plot"><strong>Plot:</strong> An evil organization's combat agent is sent to conquer a fantasy world, paired with a mischievous android. His overpowered abilities and questionable morals lead to chaotic adventures as he tries to complete his mission.</p>
+                            <p class="mc-info"><strong>MC: Agent Six</strong> - Overpowered. Six uses advanced technology and combat skills from his organization, easily outmatching most opponents in the fantasy world, though his antics often cause trouble.</p>
+                        </li>
+                        <li>
+                            <span class="anime-text">Overlord</span>
+                            <a href="/anime/overlord-ep1.mp4" class="download-button">Download</a>
+                            <p class="anime-plot"><strong>Plot:</strong> A gamer becomes trapped in a virtual reality game as his overpowered skeletal character, Ains Ooal Gown. He takes control of a dark kingdom, using his immense power and strategic mind to dominate the new world.</p>
+                            <p class="mc-info"><strong>MC: Ains Ooal Gown (Momonga)</strong> - Overpowered. Ains wields godlike magic as a level 100 lich, capable of wiping out armies with a single spell and commanding a loyal undead legion.</p>
+                        </li>
+                        <li>
+                            <span class="anime-text">That Time I Got Reincarnated as a Slime</span>
+                            <a href="/anime/slime-ep1.mp4" class="download-button">Download</a>
+                            <p class="anime-plot"><strong>Plot:</strong> A man is reborn as a powerful slime in a fantasy world after being stabbed. With unique abilities to absorb powers and build a nation of monsters, he rises as an overpowered leader while seeking peace and friendship.</p>
+                            <p class="mc-info"><strong>MC: Rimuru Tempest</strong></p>
+                        </li>
+                        <li>
+                            <span class="anime-text">The Rising of the Shield Hero</span>
+                            <a href="/anime/shield-hero-ep1.mp4" class="download-button">Download</a>
+                            <p class="anime-plot"><strong>Plot:</strong> Summoned to a fantasy world as one of four heroes, the protagonist wields a shield with defensive powers. Betrayed and outcast, he rises with overpowered abilities to protect the world.</p>
+                            <p class="mc-info"><strong>MC: Naofumi Iwatani</strong> - Overpowered. Naofumi's shield evolves into powerful forms, making him nearly invincible while he strategizes to overcome adversity.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="genre-section">
+                    <h3>Isekai Adventures</h3>
+                    <input type="checkbox" id="toggle-genre-isekai" class="toggle-checkbox">
+                    <label for="toggle-genre-isekai" class="toggle-button"></label>
+                    <ul id="genre-list-isekai" class="genre-list">
+                        <li>
+                            <span class="anime-text">Re:Zero - Starting Life in Another World</span>
+                            <a href="/anime/rezero-ep1.mp4" class="download-button">Download</a>
+                            <p class="anime-plot"><strong>Plot:</strong> A young man is transported to a fantasy world after dying in his own. He discovers he can rewind time upon death, using this power to protect those he loves and uncover mysteries.</p>
+                            <p class="mc-info"><strong>MC: Subaru Natsuki</strong> - Determined. Subaru lacks physical strength but uses his time-rewind ability and perseverance to overcome challenges.</p>
+                        </li>
+                        <li>
+                            <span class="anime-text">Sword Art Online</span>
+                            <a href="/anime/sao-ep1.mp4" class="download-button">Download</a>
+                            <p class="anime-plot"><strong>Plot:</strong> Players of a virtual reality game become trapped inside, forced to fight for survival. The protagonist rises as a skilled swordsman to escape the deadly game.</p>
+                            <p class="mc-info"><strong>MC: Kirito</strong> - Skilled. Kirito is a master gamer with exceptional combat skills, often taking on challenges solo.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="darktunnal-config">
+            <h2>Darktunnal Config File</h2>
+            <input type="checkbox" id="toggle-darktunnal" class="toggle-checkbox">
+            <label for="toggle-darktunnal" class="toggle-button"></label>
+            <div id="darktunnal-list" class="darktunnal-list">
+                <div class="config-section">
+                    <h3>SSH Config</h3>
+                    <input type="checkbox" id="toggle-ssh" class="toggle-checkbox">
+                    <label for="toggle-ssh" class="toggle-button"></label>
+                    <ul id="ssh-list" class="config-list">
+                        <li>
+                            <span class="config-text">SSH Tunnel Config</span>
+                            <a href="/configs/ssh-tunnel.conf" class="download-button">Download</a>
+                            <p class="config-description"><strong>Description:</strong> This SSH config enables secure tunneling for Darktunnal. Use it to establish encrypted connections over SSH.</p>
+                        </li>
+                        <li>
+                            <span class="config-text">SSH Fast Tunnel Config</span>
+                            <a href="/configs/ssh-fast-tunnel.conf" class="download-button">Download</a>
+                            <p class="config-description"><strong>Description:</strong> This SSH config is optimized for speed, providing fast tunneling for Darktunnal with minimal latency.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="config-section">
+                    <h3>V2Ray Config</h3>
+                    <input type="checkbox" id="toggle-v2ray" class="toggle-checkbox">
+                    <label for="toggle-v2ray" class="toggle-button"></label>
+                    <ul id="v2ray-list" class="config-list">
+                        <li>
+                            <span class="config-text">V2Ray Protocol Config</span>
+                            <a href="/configs/v2ray-config.json" class="download-button">Download</a>
+                            <p class="config-description"><strong>Description:</strong> This V2Ray config supports advanced routing and obfuscation for Darktunnal. Ideal for bypassing restrictions.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <div class="social-media">
             <h2>Follow Me</h2>
             <ul>
-                <li><a href="https://www.instagram.com/xonic.psycho?igsh=MTkyNTkzYWF6dXkzaA==" target="_blank">Instagram Edits</a></li>
-                <li><a href="https://www.instagram.com/coolboy_m4?igsh=MTZhYXFrbTV6NHdhNA==" target="_blank">Instagram Personal</a></li>
+                <li><a href="https://instagram.com/your_edits_handle" target="_blank"><i class="fab fa-instagram"></i> Instagram Edits</a></li>
+                <li><a href="https://instagram.com/your_personal_handle" target="_blank"><i class="fab fa-instagram"></i> Instagram Personal</a></li>
             </ul>
         </div>
     </main>
     <footer>
-        <p>© 2025 Website</p>
+        <p>© 2025 Coolboy's Website</p>
     </footer>
-    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 </body>
 </html>
