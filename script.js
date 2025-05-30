@@ -1,6 +1,6 @@
 // Import Firebase modular SDK functions
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js';
+import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js';
 import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
 
 // Firebase configuration
@@ -25,6 +25,16 @@ const loginButton = document.getElementById('google-login');
 const logoutButton = document.getElementById('logout');
 const userInfo = document.getElementById('user-info');
 
+// Handle Redirect Result
+getRedirectResult(auth).then(result => {
+    if (result) {
+        console.log('User signed in via redirect:', result.user);
+    }
+}).catch(error => {
+    alert(`Redirect Login Error: ${error.code} - ${error.message}`);
+    console.error('Redirect Login Error:', error);
+});
+
 // Authentication State Listener
 onAuthStateChanged(auth, user => {
     if (user) {
@@ -40,12 +50,11 @@ onAuthStateChanged(auth, user => {
     }
 });
 
-// Google Login
+// Google Login with Redirect
 loginButton.addEventListener('click', async () => {
     const provider = new GoogleAuthProvider();
     try {
-        const result = await signInWithPopup(auth, provider);
-        console.log('User signed in:', result.user);
+        await signInWithRedirect(auth, provider);
     } catch (error) {
         alert(`Login Error: ${error.code} - ${error.message}`);
         console.error('Login Error:', error);
