@@ -47,7 +47,7 @@ loginButton.addEventListener('click', async () => {
         const result = await signInWithPopup(auth, provider);
         console.log('User signed in:', result.user);
     } catch (error) {
-        alert(`Login Error: ${error.message}`);
+        alert(`Login Error: ${error.code} - ${error.message}`);
         console.error('Login Error:', error);
     }
 });
@@ -68,7 +68,6 @@ function enableWatchedButtons(user) {
     document.querySelectorAll('.contact-button').forEach(button => {
         button.disabled = false;
         button.title = '';
-        // Remove previous listeners to prevent duplicates
         button.removeEventListener('click', handleWatchedClick);
         button.addEventListener('click', () => handleWatchedClick(button, user));
     });
