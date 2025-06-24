@@ -1,4 +1,3 @@
-/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -15,9 +14,18 @@ header {
     padding: 10px;
     border-radius: 5px;
     animation: slideIn 0.6s ease-out;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
 }
 
 h1 { margin: 0; }
+
+header h1 {
+    text-align: center;
+    flex-grow: 1;
+}
 
 main { margin: 20px 0; }
 
@@ -28,7 +36,7 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: transform 0.2s, background-color 0.3s;
 }
 
 button:hover {
@@ -36,10 +44,160 @@ button:hover {
     transform: scale(1.1);
 }
 
-button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-    transform: none;
+.dropdown {
+    position: relative;
+}
+
+.dropdown-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 8px;
+    transition: transform 0.2s;
+}
+
+.dropdown-toggle:hover {
+    transform: scale(1.1);
+}
+
+.dropdown-toggle i {
+    font-size: 24px;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: rgba(51, 51, 51, 0.95);
+    min-width: 160px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px 8px 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: bold;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dropdown-item i {
+    margin-right: 16px;
+    width: 16px;
+    text-align: center;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-item.logout-button {
+    background: none;
+    padding: 8px 12px 8px 20px;
+}
+
+.dropdown-item.logout-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.profile-button {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+.profile-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+.profile-button i {
+    font-size: 18px;
+}
+
+.profile-section {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profile-section h2 {
+    color: #5C4033;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-info p {
+    margin: 5px 0;
+    font-size: 1em;
+    color: #333;
+}
+
+.profile-info strong {
+    color: #007bff;
+}
+
+.profile-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.action-button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.action-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
 }
 
 footer {
@@ -51,39 +209,6 @@ footer {
     border-radius: 5px;
 }
 
-/* Authentication Section */
-.auth-section {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.auth-button {
-    padding: 8px 16px;
-    background-color: #4285f4; /* Google Blue */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9em;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.auth-button:hover {
-    background-color: #3267d6;
-    transform: scale(1.1);
-}
-
-.auth-button i {
-    font-size: 1em;
-}
-
-/* About Me Section */
 .about-me {
     margin-top: 20px;
     padding: 15px;
@@ -113,7 +238,6 @@ footer {
     background-color: rgba(255, 205, 210, 0.9);
 }
 
-/* Favorite Games Section */
 .favorite-games {
     margin-top: 20px;
     padding: 15px;
@@ -131,7 +255,11 @@ footer {
 
 .favorite-games ul { list-style: none; padding: 0; }
 
-.favorite-games li { margin: 8px 0; }
+.favorite-games li { margin: 8px 0; transition: transform 0.2s; }
+
+.favorite-games li:hover {
+    transform: translateY(-2px);
+}
 
 .favorite-games .game-text {
     color: #0000ff;
@@ -148,7 +276,6 @@ footer {
     background-color: rgba(187, 222, 251, 0.9);
 }
 
-/* Social Media Section */
 .social-media {
     margin-top: 20px;
     padding: 15px;
@@ -176,7 +303,6 @@ footer {
 
 .social-media a:hover { color: #0056b3; }
 
-/* Unified Class for Main Sections */
 .main-section {
     margin-top: 20px;
     padding: 15px;
@@ -191,9 +317,7 @@ footer {
     margin-bottom: 10px;
 }
 
-/* Specific Content Styling for Main Sections */
-.main-section .anime-list,
-.main-section .darktunnal-list {
+.main-section .anime-list {
     padding: 0;
     margin: 0;
     transition: opacity 0.3s ease, padding 0.2s ease 0.1s, margin 0.2s ease 0.1s;
@@ -202,162 +326,6 @@ footer {
     opacity: 0;
 }
 
-.main-section .main-anime-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.main-section .main-anime-list li {
-    margin: 4px 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    transition: padding 0.2s ease 0.1s, margin 0.2s ease 0.1s;
-}
-
-.download-button {
-    display: inline-block;
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 0.9em;
-    transition: transform 0.2s, background-color 0.3s;
-    margin-top: 10px;
-}
-
-.download-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.1);
-}
-
-.download-button i {
-    margin-right: 5px;
-}
-
-/* New Unified Class for Subsections */
-.subsection {
-    margin-top: 8px;
-    padding: 5px;
-    border-radius: 5px;
-    transition: padding 0.2s ease 0.2s, margin 0.2s ease 0.2s;
-    background-color: rgba(167, 139, 250, 0.7);
-}
-
-.subsection h3 {
-    font-size: 1.1em;
-    margin-bottom: 8px;
-    margin-top: 0;
-}
-
-.main-section .genre-list,
-.main-section .config-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    transition: opacity 0.3s ease, padding 0.2s ease 0.3s, margin 0.2s ease 0.3s;
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    background-color: transparent;
-}
-
-.main-section .genre-list li,
-.main-section .config-list li {
-    margin: 15px 0;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    transition: padding 0.2s ease 0.4s, margin 0.2s ease 0.4s;
-    background-color: rgba(255, 255, 255, 0.98);
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-.main-section .anime-concept {
-    font-size: 1em;
-    color: #ff5252;
-    margin: 5px 0;
-    padding: 0 10px;
-    text-align: center;
-    max-width: 90%;
-}
-
-.main-section .anime-concept strong {
-    color: #d32f2f;
-}
-
-.main-section .anime-plot {
-    font-size: 1em;
-    color: #6a1b9a;
-    margin: 5px 0;
-    padding: 0 10px;
-    text-align: center;
-    max-width: 90%;
-}
-
-.main-section .anime-plot strong {
-    color: #004d40;
-}
-
-.main-section .mc-info {
-    font-size: 1em;
-    color: #00695c;
-    margin: 5px 0;
-    padding: 0 10px;
-    text-align: center;
-    max-width: 90%;
-}
-
-.main-section .mc-info strong {
-    color: #004d40;
-}
-
-.main-section .config-description,
-.main-section .config-instructions {
-    font-size: 1em;
-    color: #6a1b9a;
-    margin: 5px 0;
-    padding: 0 10px;
-    text-align: center;
-    max-width: 90%;
-}
-
-.main-section .config-description strong,
-.main-section .config-instructions strong {
-    color: #004d40;
-}
-
-.toggle-checkbox {
-    display: none;
-}
-
-.toggle-button {
-    padding: 5px 10px;
-    font-size: 0.9em;
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    margin-left: 10px;
-    display: inline-block;
-}
-
-.toggle-button:hover {
-    background-color: #333333;
-    transform: scale(1.1);
-}
-
-/* Hide/Show Anime List */
 #toggle-anime:not(:checked) ~ .anime-list {
     opacity: 0;
     visibility: hidden;
@@ -380,8 +348,241 @@ footer {
     content: "Show";
 }
 
-/* Hide/Show Overpowered MC Genre List */
-#toggle-genre-opmc:not(:checked) ~ #genre-list-opmc {
+.subsection {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    transition: padding 0.2s ease 0.2s, margin 0.2s ease 0.2s;
+    background-color: rgba(167, 139, 250, 0.7);
+}
+
+.subsection h3 {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    margin-top: 0;
+}
+
+.main-section .genre-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0s linear 0.3s;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    background-color: transparent;
+}
+
+.main-section .genre-list.manual-open,
+.main-section .genre-list.search-open {
+    max-height: 1000px; /* Large enough to show all content */
+    opacity: 1;
+    visibility: visible;
+    transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0s linear 0s;
+}
+
+.main-section .genre-list li {
+    margin: 15px 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(255, 255, 255, 0.98);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.main-section .genre-list li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.download-button-group {
+    flex-direction: row;
+    justify-content: center;
+}
+
+.main-section .anime-type {
+    font-size: 1em;
+    color: #ff5252;
+    margin: 5px 0;
+    padding: 0 10px;
+    text-align: center;
+    max-width: 90%;
+}
+
+.main-section .anime-type strong {
+    color: #d32f2f;
+}
+
+.main-section .anime-plot {
+    font-size: 1em;
+    color: #6a1b9a;
+    margin: 5px 0;
+    padding: 0 10px;
+    text-align: center;
+    max-width: 90%;
+}
+
+.main-section .anime-plot strong {
+    color: #004d40;
+}
+
+.main-section .anime-dub {
+    font-size: 1em;
+    color: darkgreen;
+    margin: 5px 0;
+    padding: 0 10px;
+    text-align: center;
+    max-width: 90%;
+}
+
+.main-section .anime-dub strong {
+    color: green;
+}
+
+.main-section .mc-info {
+    font-size: 1em;
+    color: red;
+    margin: 5px;
+    padding: 0 10px;
+    text-align: center;
+    max-width: 90%;
+}
+
+.main-section .mc-info strong {
+    color: red;
+}
+
+.main-section .anime-rating {
+    font-size: 1em;
+    color: #f57c00;
+    margin: 5px 0;
+    padding: 0 10px;
+    text-align: center;
+    max-width: 90%;
+}
+
+.main-section .anime-rating strong {
+    color: #f57c00;
+}
+
+.download-button {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 0.9em;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+.download-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+.download-button i {
+    margin-right: 5px;
+}
+
+.watched-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+.watched-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+.toggle-checkbox {
+    display: none;
+}
+
+.toggle-button {
+    padding: 5px 10px 5px 25px;
+    font-size: 0.9em;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-left: 10px;
+    display: inline-block;
+    position: relative;
+}
+
+.toggle-button::before {
+    content: "\f078";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.toggle-button:hover {
+    background-color: #333333;
+    transform: scale(1.1);
+}
+
+.toggle-button:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+#toggle-anime:checked ~ .toggle-button::before,
+.toggle-checkbox:checked + .toggle-button::before {
+    content: "\f077";
+}
+
+.toggle-checkbox:checked + .toggle-button::after {
+    content: "Hide";
+}
+
+.toggle-checkbox:not(:checked) + .toggle-button::after {
+    content: "Show";
+}
+
+.main-section .app-content {
+    padding: 10px 0;
+    margin: 10px 0;
+    opacity: 1;
+    visibility: visible;
+    max-height: none;
+}
+
+.main-section .premium-apk-list {
+    padding: 0;
+    margin: 0;
+    transition: opacity 0.3s ease, padding 0.2s ease 0.1s, margin 0.2s ease 0.1s;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+}
+
+#toggle-premium-apks:not(:checked) ~ .premium-apk-list {
     opacity: 0;
     visibility: hidden;
     max-height: 0;
@@ -389,113 +590,37 @@ footer {
     margin: 0;
 }
 
-#toggle-genre-opmc:checked ~ #genre-list-opmc {
+#toggle-premium-apks:checked ~ .premium-apk-list {
     opacity: 1;
     visibility: visible;
     max-height: none;
 }
 
-#toggle-genre-opmc:checked ~ .toggle-button::after {
-    content: "Hide";
+.apk-item {
+    margin: 15px 0;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.98);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
 }
 
-#toggle-genre-opmc:not(:checked) ~ .toggle-button::after {
-    content: "Show";
+.apk-title {
+    font-weight: bold;
+    color: #0000ff;
+    font-size: 1em;
 }
 
-/* Hide/Show Isekai Adventures Genre List */
-#toggle-genre-isekai:not(:checked) ~ #genre-list-isekai {
-    opacity: 0;
-    visibility: hidden;
-    max-height: 0;
-    padding: 0;
-    margin: 0;
+.apk-description {
+    color: #333;
+    margin: 5px 0;
+    font-size: 0.9em;
+    text-align: center;
 }
 
-#toggle-genre-isekai:checked ~ #genre-list-isekai {
-    opacity: 1;
-    visibility: visible;
-    max-height: none;
-}
-
-#toggle-genre-isekai:checked ~ .toggle-button::after {
-    content: "Hide";
-}
-
-#toggle-genre-isekai:not(:checked) ~ .toggle-button::after {
-    content: "Show";
-}
-
-/* Hide/Show Darktunnal Config List */
-#toggle-darktunnal:not(:checked) ~ .darktunnal-list {
-    opacity: 0;
-    visibility: hidden;
-    max-height: 0;
-    padding: 0;
-    margin: 0;
-}
-
-#toggle-darktunnal:checked ~ .darktunnal-list {
-    opacity: 1;
-    visibility: visible;
-    max-height: none;
-}
-
-#toggle-darktunnal:checked ~ .toggle-button::after {
-    content: "Hide";
-}
-
-#toggle-darktunnal:not(:checked) ~ .toggle-button::after {
-    content: "Show";
-}
-
-/* Hide/Show SSH Config List */
-#toggle-ssh:not(:checked) ~ #ssh-list {
-    opacity: 0;
-    visibility: hidden;
-    max-height: 0;
-    padding: 0;
-    margin: 0;
-}
-
-#toggle-ssh:checked ~ #ssh-list {
-    opacity: 1;
-    visibility: visible;
-    max-height: none;
-}
-
-#toggle-ssh:checked ~ .toggle-button::after {
-    content: "Hide";
-}
-
-#toggle-ssh:not(:checked) ~ .toggle-button::after {
-    content: "Show";
-}
-
-/* Hide/Show V2Ray Config List */
-#toggle-v2ray:not(:checked) ~ #v2ray-list {
-    opacity: 0;
-    visibility: hidden;
-    max-height: 0;
-    padding: 0;
-    margin: 0;
-}
-
-#toggle-v2ray:checked ~ #v2ray-list {
-    opacity: 1;
-    visibility: visible;
-    max-height: none;
-}
-
-#toggle-v2ray:checked ~ .toggle-button::after {
-    content: "Hide";
-}
-
-#toggle-v2ray:not(:checked) ~ .toggle-button::after {
-    content: "Show";
-}
-
-/* Unified Classes for Brown Color Headings */
 .section-heading {
     color: #5C4033;
 }
@@ -504,11 +629,10 @@ footer {
     color: #5C4033;
 }
 
-/* Updated Class for Anime and Config Text */
 .text-list {
     color: #0000ff;
     font-weight: bold;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255, 255, 250, 0.95);
     padding: 8px 12px;
     border-radius: 5px;
     display: inline-block;
@@ -522,14 +646,246 @@ footer {
     background-color: rgba(240, 240, 240, 0.95);
 }
 
-/* Unified Class for Section Descriptions */
 .section-description {
     font-size: 1em;
     color: #333;
     margin: 10px 0;
 }
 
-/* Animations */
+.auth-input {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9em;
+    margin: 5px 0;
+    width: 200px;
+    max-width: 90%;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+.login-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+    margin: 10px 5px;
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+.toggle-password {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+    margin: 0;
+    height: 100%;
+}
+
+.toggle-password:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.input-container .auth-input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9em;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+.password-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 5px 0;
+}
+
+.password-container .auth-input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9em;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+.auth-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.register-button {
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+    margin: 10px 5px;
+}
+
+.error-message {
+    color: #d32f2f;
+    font-size: 0.9em;
+    margin: 10px 0;
+}
+
+.success-message {
+    color: #28a745;
+    font-size: 0.9em;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.watched-list {
+    list-style: none;
+    padding: 8px;
+    margin: 0;
+    background-color: transparent;
+}
+
+.watched-list li {
+    color: #0000ff;
+    font-weight: bold;
+    background-color: rgba(255, 255, 250, 0.95);
+    padding: 8px 12px;
+    border-radius: 5px;
+    display: inline-block;
+    transition: color 0.3s, background-color 0.3s;
+    margin: 5px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.watched-list li:hover {
+    color: #01579b;
+    background-color: rgba(240, 240, 240, 0.95);
+}
+
+.empty-message {
+    color: #333;
+    font-style: italic;
+}
+
+.user-watched-section {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-watched-section h4 {
+    font-size: 1.1em;
+    color: #5C4033;
+    margin-bottom: 10px;
+}
+
+.user-watched-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.user-watched-section li {
+    margin: 5px 0;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.98);
+    border-radius: 3px;
+}
+
+.user-watched-list {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.98);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.user-watched-list h5 {
+    font-size: 1em;
+    color: #6a1b9a;
+    margin-bottom: 5px;
+    margin-top: 0;
+    background-color: transparent;
+    padding: 5px 10px;
+    border-radius: 0;
+    display: block;
+}
+
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    overflow: visible;
+}
+
+.toast {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    font-size: 0.9em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast-success {
+    background-color: #28a745;
+}
+
+.toast-error {
+    background-color: #d32f2f;
+}
+
+.toast-info {
+    background-color: #17a2b8;
+}
+
 @keyframes slideIn {
     from { transform: translateY(-100%); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
@@ -546,46 +902,101 @@ footer {
     100% { background-position: 0% 50%; }
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 600px) {
-    body {
-        padding: 10px;
-    }
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
 
-    header {
-        padding: 8px;
-    }
+.modal-content {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in;
+}
 
-    h1 {
-        font-size: 1.5em;
-    }
+.close-button {
+    float: right;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #333;
+}
 
-    .main-section, .about-me, .favorite-games, .social-media {
-        padding: 10px;
-        margin: 10px 0;
-    }
+.close-button:hover {
+    color: #d32f2f;
+}
 
-    .section-heading, .subsection-heading {
-        font-size: 1.1em;
-    }
+#edit-profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
 
-    .text-list, .download-button, .auth-button, .toggle-button, .contact-button {
-        font-size: 0.85em;
-        padding: 6px 12px;
-    }
+#edit-profile-form label {
+    font-weight: bold;
+    color: #333;
+}
 
-    .anime-concept, .anime-plot, .mc-info, .config-description {
-        font-size: 0.9em;
-        max-width: 95%;
-    }
+#new-display-name {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
 
-    .genre-list li, .config-list li {
-        padding: 8px;
-        margin: 10px 0;
-    }
+.cancel-button {
+    background-color: #6c757d;
+}
 
-    .auth-section {
-        flex-direction: column;
-        gap: 8px;
-    }
+.cancel-button:hover {
+    background-color: #5a6268;
+}
+
+.error-message {
+    margin: 5px 0;
+    font-size: 0.9em;
+    color: #d32f2f;
+    text-align: center;
+}
+
+.search-wrapper {
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height 0.2s ease, opacity 0.3s ease, visibility 0s linear 0.3s;
+    margin: 10px 0;
+}
+
+.search-wrapper.visible {
+    max-height: 40px;
+    opacity: 1;
+    visibility: visible;
+    transition: max-height 0.2s ease, opacity 0.3s ease;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.search-input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9em;
+    width: 200px;
+    max-width: 90%;
+    box-sizing: border-box;
 }

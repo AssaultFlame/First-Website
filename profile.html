@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Coolboy's Website</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Toast container for displaying success/error messages -->
+    <div id="toast-container" class="toast-container"></div>
+    <header>
+        <!-- Dropdown menu for navigation -->
+        <div class="dropdown">
+            <button class="dropdown-toggle" aria-expanded="false" aria-controls="dropdown-menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="index.html" class="dropdown-item"><i class="fas fa-home"></i> Home</a>
+                <a href="watched_list.html" class="dropdown-item"><i class="fas fa-list"></i> Watched List</a>
+                <a href="contact.html" class="dropdown-item"><i class="fas fa-envelope"></i> Contact</a> <!-- Added Contact link -->
+                <button class="dropdown-item logout-button" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </div>
+        <h1>Your Profile</h1>
+        <!-- Profile button (self-link) -->
+        <a href="profile.html" class="profile-button" aria-label="View Profile"><i class="fas fa-user"></i></a>
+    </header>
+    <main>
+        <!-- Profile information section -->
+        <div class="profile-section">
+            <h2>Profile</h2>
+            <div class="profile-info">
+                <p><strong>Display Name:</strong> <span id="user-display-name">Loading...</span></p>
+                <p><strong>Email:</strong> <span id="user-email">Loading...</span></p>
+            </div>
+            <!-- Action buttons for profile management -->
+            <div class="profile-actions">
+                <button class="action-button" onclick="openEditModal()"><i class="fas fa-edit"></i> Edit Profile</button>
+                <button class="action-button" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </div>
+        <!-- Modal for editing display name -->
+        <div id="edit-profile-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <!-- Close button for modal -->
+                <span class="close-button" onclick="closeEditModal()">×</span>
+                <h3>Edit Profile</h3>
+                <!-- Form for updating display name -->
+                <form id="edit-profile-form">
+                    <!-- Label and input for new display name -->
+                    <label for="new-display-name">New Display Name:</label>
+                    <input type="text" id="new-display-name" class="auth-input" required placeholder="Enter your display name">
+                    <!-- Error message container (hidden by default) -->
+                    <p id="form-error" class="error-message" style="display: none;"></p>
+                    <!-- Form action buttons -->
+                    <div class="button-group">
+                        <button type="submit" class="action-button"><i class="fas fa-save"></i> Save Changes</button>
+                        <button type="button" class="action-button cancel-button" onclick="closeEditModal()"><i class="fas fa-times"></i> Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>© 2025 Coolboy's Website</p>
+    </footer>
+    <script type="module">
+        // Import Firebase modules
+        import { firebaseConfig } from "./firebase-config.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+
+        // Initialize Firebase
+        let app, auth, db;
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+        } catch (err) {
+            showToast("Failed to initialize Firebase.", "error");
+        }
+
+        // Toast notification function
+        window.showToast = function (message, type = "success") {
+            const toastContainer = document.getElementById("toast-container");
+            if (!toastContainer) {
+                alert(`Toast failed: ${message}`); // Fallback
+                return;
+            }
+            const toast = document.createElement("div");
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            toastContainer.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add("show");
+            }, 100);
+            setTimeout(() => {
+                toast.classList.remove("show");
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        };
+
+        // Open modal and pre-fill with current display name
+        window.openEditModal = function () {
+            const modal = document.getElementById("edit-profile-modal");
+            const input = document.getElementById("new-display-name");
+            const error = document.getElementById("form-error");
+            // Pre-fill input with current display name
+            input.value = auth.currentUser?.displayName || "";
+            // Clear any previous error
+            error.style.display = "none";
+            error.textContent = "";
+            modal.style.display = "flex";
+        };
+
+        // Close modal and reset form
+        window.closeEditModal = function () {
+            const modal = document.getElementById("edit-profile-modal");
+            const input = document.getElementById("new-display-name");
+            const error = document.getElementById("form-error");
+            modal.style.display = "none";
+            input.value = "";
+            error.style.display = "none";
+            error.textContent = "";
+        };
+
+        // Setup dropdown menu
+        function setupDropdown() {
+            const toggleButton = document.querySelector(".dropdown-toggle");
+            const dropdownMenu = document.querySelector(".dropdown-menu");
+            if (toggleButton && dropdownMenu) {
+                toggleButton.addEventListener("click", () => {
+                    const isExpanded = dropdownMenu.classList.toggle("show");
+                    toggleButton.setAttribute("aria-expanded", isExpanded);
+                });
+                document.addEventListener("click", (event) => {
+                    if (!toggleButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                        dropdownMenu.classList.remove("show");
+                        toggleButton.setAttribute("aria-expanded", "false");
+                    }
+                });
+            }
+        }
+
+        // Logout function
+        window.logout = function () {
+            if (!auth) {
+                showToast("Logout failed: Authentication not initialized.", "error");
+                return;
+            }
+            signOut(auth).then(() => {
+                showToast("Logged out successfully!", "success");
+                location.href = "login.html";
+            }).catch(err => {
+                showToast(`Logout failed: ${err.message}`, "error");
+            });
+        };
+
+        // Handle form submission for updating display name
+        document.getElementById("edit-profile-form")?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const newDisplayName = document.getElementById("new-display-name").value.trim();
+            const error = document.getElementById("form-error");
+            // Validate input
+            if (!newDisplayName) {
+                error.textContent = "Display name cannot be empty.";
+                error.style.display = "block";
+                return;
+            }
+            // Clear error if valid
+            error.style.display = "none";
+            error.textContent = "";
+            // Update Firebase profile and Firestore
+            const user = auth.currentUser;
+            if (user) {
+                try {
+                    // Update Firebase Auth displayName
+                    await updateProfile(user, { displayName: newDisplayName });
+                    // Sync username in Firestore
+                    await setDoc(doc(db, "users", user.uid), { username: newDisplayName }, { merge: true });
+                    // Update UI
+                    document.getElementById("user-display-name").textContent = newDisplayName;
+                    showToast("Display name updated successfully!", "success");
+                    closeEditModal();
+                } catch (err) {
+                    error.textContent = `Failed to update profile: ${err.message}`;
+                    error.style.display = "block";
+                    showToast(`Failed to update profile: ${err.message}`, "error");
+                }
+            } else {
+                error.textContent = "No user authenticated.";
+                error.style.display = "block";
+                showToast("No user authenticated.", "error");
+            }
+        });
+
+        // Initialize page
+        window.addEventListener("DOMContentLoaded", () => {
+            setupDropdown();
+            // Monitor auth state
+            onAuthStateChanged(auth, user => {
+                if (!user) {
+                    location.href = "login.html";
+                } else {
+                    document.getElementById("user-display-name").textContent = user.displayName || "N/A";
+                    document.getElementById("user-email").textContent = user.email || "N/A";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

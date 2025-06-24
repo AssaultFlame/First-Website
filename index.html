@@ -8,13 +8,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
     <header>
-        <h1>Thanks For Visiting</h1>
-        <div class="auth-section">
-            <button id="google-login" class="auth-button"><i class="fab fa-google"></i> Sign in with Google</button>
-            <button id="logout" class="auth-button" style="display: none;">Logout</button>
-            <p id="user-info" style="color: white; margin: 10px 0;"></p>
+        <div class="dropdown">
+            <button class="dropdown-toggle" aria-expanded="false" aria-controls="dropdown-menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="watched_list.html" class="dropdown-item"><i class="fas fa-list"></i> Watched List</a>
+                <a href="contact.html" class="dropdown-item"><i class="fas fa-envelope"></i> Contact</a>
+                <button class="dropdown-item logout-button"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                <!-- Admin option, hidden by default and shown only for admin -->
+                <a href="admin_messages.html" class="dropdown-item admin-only" style="display: none;"><i class="fas fa-inbox"></i> Admin</a>
+            </div>
         </div>
+        <h1>Thanks For Visiting</h1>
+        <a href="profile.html" class="profile-button" aria-label="View Profile"><i class="fas fa-user"></i></a>
     </header>
     <main>
         <div class="about-me">
@@ -29,143 +40,562 @@
                 <li><span class="game-text">DB Legends</span></li>
                 <li><span class="game-text">Pubg Mobile</span></li>
                 <li><span class="game-text">Free Fire Max</span></li>
+                <li><span class="game-text">Multiplayer Games</span></li>
                 <li><span class="game-text">And Survival Games</span></li>
             </ul>
         </div>
         <div class="main-section">
-            <h2 class="section-heading">Anime List English</h2>
-            <p class="section-description">Explore my curated list of English-subbed anime, featuring overpowered main characters and thrilling isekai adventures!</p>
+            <h2 class="section-heading">Anime List</h2>
+            <p class="section-description">
+                Explore Anime Download and Watch! 
+                <br>
+                <span style="color: green;">Updated: June 08, 2025</span>
+            </p>
             <input type="checkbox" id="toggle-anime" class="toggle-checkbox">
-            <label for="toggle-anime" class="toggle-button"></label>
+            <label for="toggle-anime" class="toggle-button" role="button" tabindex="0" aria-label="Toggle Anime List"></label>
+            <div class="search-wrapper" id="anime-search-wrapper">
+                <div class="search-container">
+                    <label for="anime-search">Search Anime: </label>
+                    <input type="text" id="anime-search" class="search-input" placeholder="Type to search..." aria-label="Search all anime">
+                </div>
+            </div>
             <div id="anime-list" class="anime-list">
-                <div class="subsection">
-                    <h3 class="subsection-heading">OverPowered MC</h3>
-                    <input type="checkbox" id="toggle-genre-opmc" class="toggle-checkbox">
-                    <label for="toggle-genre-opmc" class="toggle-button"></label>
-                    <ul id="genre-list-opmc" class="genre-list">
-                        <li>
-                            <span class="text-list">Wise Man's Grandchild</span>
-                            <a href="/anime/wise-mans-grandchild-ep1.mp4" class="download-button">Download</a>
-                            <button class="contact-button" data-anime="Wise Man's Grandchild">Watched</button>
-                            <p class="anime-concept"><strong>Concept:</strong> A modern man reincarnates into a magical world with unparalleled talent, blending contemporary knowledge with ancient magic to dominate his new life.</p>
-                            <p class="anime-plot"><strong>Plot:</strong> A young man dies in an accident and is reincarnated in a magical world as a baby. Raised by a legendary wizard, he grows up with extraordinary magical abilities, navigating school life and epic battles with his overpowered skills.</p>
-                            <p class="mc-info"><strong>MC: Shin Wolford</strong> - Overpowered. Shin has exceptional magical abilities, mastering complex spells far beyond his peers, and often overwhelms enemies with his intelligence and raw power.</p>
-                        </li>
-                        <li>
-                            <span class="text-list">Combatants Will Be Dispatched!</span>
-                            <a href="/anime/combatants-dispatched-ep1.mp4" class="download-button">Download</a>
-                            <button class="contact-button" data-anime="Combatants Will Be Dispatched!">Watched</button>
-                            <p class="anime-concept"><strong>Concept:</strong> A darkly comedic take on isekai where an evil operative invades a fantasy world, using futuristic tech and morally gray tactics to achieve domination.</p>
-                            <p class="anime-plot"><strong>Plot:</strong> An evil organization's combat agent is sent to conquer a fantasy world, paired with a mischievous android. His overpowered abilities and questionable morals lead to chaotic adventures as he tries to complete his mission.</p>
-                            <p class="mc-info"><strong>MC: Agent Six</strong> - Overpowered. Six uses advanced technology and combat skills from his organization, easily outmatching most opponents in the fantasy world, though his antics often cause trouble.</p>
-                        </li>
-                        <li>
-                            <span class="text-list">Overlord</span>
-                            <a href="/anime/overlord-ep1.mp4" class="download-button">Download</a>
-                            <button class="contact-button" data-anime="Overlord">Watched</button>
-                            <p class="anime-concept"><strong>Concept:</strong> A player trapped in a game world as a dark overlord explores themes of power, morality, and leadership in a realm where he is godlike.</p>
-                            <p class="anime-plot"><strong>Plot:</strong> A gamer becomes trapped in a virtual reality game as his overpowered skeletal character, Ains Ooal Gown. He takes control of a dark kingdom, using his immense power and strategic mind to dominate the new world.</p>
-                            <p class="mc-info"><strong>MC: Ains Ooal Gown (Momonga)</strong> - Overpowered. Ains wields godlike magic as a level 100 lich, capable of wiping out armies with a single spell and commanding a loyal undead legion.</p>
-                        </li>
-                        <li>
-                            <span class="text-list">That Time I Got Reincarnated as a Slime</span>
-                            <a href="/anime/slime-ep1.mp4" class="download-button">Download</a>
-                            <button class="contact-button" data-anime="That Time I Got Reincarnated as a Slime">Watched</button>
-                            <p class="anime-concept"><strong>Concept:</strong> Rebirth as a lowly creature in a fantasy world transforms into a journey of nation-building and diplomacy with overwhelming power.</p>
-                            <p class="anime-plot"><strong>Plot:</strong> A man is reborn as a powerful slime in a fantasy world after being stabbed. With unique abilities to absorb powers and build a nation of monsters, he rises as an overpowered leader while seeking peace and friendship.</p>
-                            <p class="mc-info"><strong>MC: Rimuru Tempest</strong> - Overpowered. Rimuru's ability to absorb and mimic powers makes him a formidable leader, building a nation with unmatched strength.</p>
-                        </li>
-                        <li>
-                            <span class="text-list">The Rising of the Shield Hero</span>
-                            <a href="/anime/shield-hero-ep1.mp4" class="download-button">Download</a>
-                            <button class="contact-button" data-anime="The Rising of the Shield Hero">Watched</button>
-                            <p class="anime-concept"><strong>Concept:</strong> A hero shunned by society rises from betrayal to become an unstoppable protector, focusing on defense as the ultimate offense in a fantasy realm.</p>
-                            <p class="anime-plot"><strong>Plot:</strong> Summoned to a fantasy world as one of four heroes, the protagonist wields a shield with defensive powers. Betrayed and outcast, he rises with overpowered abilities to protect the world.</p>
-                            <p class="mc-info"><strong>MC: Naofumi Iwatani</strong> - Overpowered. Naofumi's shield evolves into powerful forms, making him nearly invincible while he strategizes to overcome adversity.</p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="subsection">
-                    <h3 class="subsection-heading">Isekai Adventures</h3>
-                    <input type="checkbox" id="toggle-genre-isekai" class="toggle-checkbox">
-                    <label for="toggle-genre-isekai" class="toggle-button"></label>
-                    <ul id="genre-list-isekai" class="genre-list">
-                        <li>
-                            <span class="text-list">Re:Zero - Starting Life in Another World</span>
-                            <a href="/anime/rezero-ep1.mp4" class="download-button">Download</a>
-                            <button class="contact-button" data-anime="Re:Zero - Starting Life in Another World">Watched</button>
-                            <p class="anime-concept"><strong>Concept:</strong> A time-looping tragedy in a fantasy world where death resets reality, forcing the protagonist to endure suffering to save others.</p>
-                            <p class="anime-plot"><strong>Plot:</strong> A young man is transported to a fantasy world after dying in his own. He discovers he can rewind time upon death, using this power to protect those he loves and uncover mysteries.</p>
-                            <p class="mc-info"><strong>MC: Subaru Natsuki</strong> - Determined. Subaru lacks physical strength but uses his time-rewind ability and perseverance to overcome challenges.</p>
-                        </li>
-                        <li>
-                            <span class="text-list">Sword Art Online</span>
-                            <a href="/anime/sao-ep1.mp4" class="download-button">Download</a>
-                            <button class="contact-button" data-anime="Sword Art Online">Watched</button>
-                            <p class="anime-concept"><strong>Concept:</strong> A virtual reality game turns into a life-or-death struggle, exploring themes of survival, love, and identity in a digital fantasy world.</p>
-                            <p class="anime-plot"><strong>Plot:</strong> Players of a virtual reality game become trapped inside, forced to fight for survival. The protagonist rises as a skilled swordsman to escape the game.</p>
-                            <p class="mc-info"><strong>MC: Kirito</strong> - Skilled. Kirito is a master gamer with exceptional combat skills, often taking on challenges solo.</p>
-                        </li>
-                    </ul>
-                </div>
+                <!-- Subsections will be generated -->
             </div>
         </div>
         <div class="main-section">
-            <h2 class="section-heading">Darktunnal Config File</h2>
-            <p class="section-description">Download configuration files for Darktunnal to set up secure and fast tunneling with SSH and V2Ray protocols.</p>
-            <input type="checkbox" id="toggle-darktunnal" class="toggle-checkbox">
-            <label for="toggle-darktunnal" class="toggle-button"></label>
-            <div id="darktunnal-list" class="darktunnal-list">
-                <div class="subsection">
-                    <h3 class="subsection-heading">SSH Config</h3>
-                    <input type="checkbox" id="toggle-ssh" class="toggle-checkbox">
-                    <label for="toggle-ssh" class="toggle-button"></label>
-                    <ul id="ssh-list" class="config-list">
-                        <li>
-                            <span class="text-list">SSH Tunnel Config</span>
-                            <a href="/configs/ssh-tunnel.conf" class="download-button">Download</a>
-                            <p class="config-description"><strong>Description:</strong> This SSH config enables secure tunneling for Darktunnal. Use it to establish encrypted connections over SSH.</p>
-                        </li>
-                        <li>
-                            <span class="text-list">SSH Fast Tunnel Config</span>
-                            <a href="/configs/ssh-fast-tunnel.conf" class="download-button">Download</a>
-                            <p class="config-description"><strong>Description:</strong> This SSH config is optimized for speed, providing fast tunneling for Darktunnal with minimal latency.</p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="subsection">
-                    <h3 class="subsection-heading">V2Ray Config</h3>
-                    <input type="checkbox" id="toggle-v2ray" class="toggle-checkbox">
-                    <label for="toggle-v2ray" class="toggle-button"></label>
-                    <ul id="v2ray-list" class="config-list">
-                        <li>
-                            <span class="text-list">V2Ray Protocol Config</span>
-                            <a href="/configs/v2ray-config.json" class="download-button">Download</a>
-                            <p class="config-description"><strong>Description:</strong> This V2Ray config supports advanced routing and obfuscation for Darktunnal. Ideal for bypassing restrictions.</p>
-                        </li>
-                    </ul>
-                </div>
+            <h2 class="section-heading">Premium APK List</h2>
+            <p class="section-description">Explore the list of Premium APKs Available for Download.
+                <br>
+                <span style="color: green;">Updated: June 08, 2025</span>
+            </p>
+            <input type="checkbox" id="toggle-premium-apks" class="toggle-checkbox">
+            <label for="toggle-premium-apks" class="toggle-button" role="button" tabindex="0" aria-label="Toggle Premium APK List"></label>
+            <div id="premium-apk-list" class="premium-apk-list">
+                <!-- List will be generated -->
             </div>
         </div>
         <div class="main-section">
             <h2 class="section-heading">Download the App</h2>
             <p class="section-description">Get the official Coolboy Hub app to access all my content directly on your Android device!</p>
-            <a href="https://example.com/coolboy-hub.apk" class="download-button" target="_blank">
-                <i class="fas fa-download"></i> Download APK
-            </a>
+            <div id="app-content" class="app-content">
+                <a href="https://www.dropbox.com/scl/fi/ejklpbsu86fp17hs4lv2q/Coolboy-Hub.apk?rlkey=0ujbqqufbk5fd3zlci63pfuc1&st=knxq1jug&dl=1" class="download-button" target="_blank" aria-label="Download Coolboy Hub APK">
+                    <i class="fas fa-download"></i> Download APK
+                </a>
+            </div>
         </div>
         <div class="social-media">
             <h2>Follow Me</h2>
             <ul>
                 <li><a href="https://instagram.com/your_edits_handle" target="_blank"><i class="fab fa-instagram"></i> Instagram Edits</a></li>
-                <li><a href="https://instagram.com/your_personal_handle" target="_blank"><i class="fab fa-instagram"></i> Instagram Personal</a></li>
+                <li><a href="https://www.instagram.com/coolboy_m4/profilecard/?igsh=MTZhYXFrbTV6NHdhNA==" target="_blank"><i class="fab fa-instagram"></i> Instagram Personal</a></li>
             </ul>
         </div>
     </main>
     <footer>
         <p>© 2025 Coolboy's Website</p>
     </footer>
-    <script type="module" src="script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <script type="module">
+        try {
+            let firebaseConfig, animeData, premiumApkData;
+            let auth = null, db = null;
+            let firebaseAuthFunctions = { onAuthStateChanged: null, signOut: null };
+            let firebaseFirestoreFunctions = { doc: null, setDoc: null, getDoc: null };
+
+            async function loadModules() {
+                try {
+                    firebaseConfig = (await import("./firebase-config.js")).default?.firebaseConfig || (await import("./firebase-config.js")).firebaseConfig;
+                } catch (err) {
+                    console.error("Failed to import firebase-config.js:", err);
+                    firebaseConfig = null;
+                }
+
+                try {
+                    animeData = (await import("./anime-data.js")).default?.animeData || (await import("./anime-data.js")).animeData;
+                } catch (err) {
+                    console.error("Failed to import anime-data.js:", err);
+                    animeData = [];
+                }
+
+                try {
+                    premiumApkData = (await import("./premiumapk-data.js")).default?.premiumApkData || (await import("./premiumapk-data.js")).premiumApkData;
+                } catch (err) {
+                    console.error("Failed to import premiumapk-data.js:", err);
+                    premiumApkData = [];
+                }
+            }
+
+            async function initFirebase() {
+                try {
+                    const firebaseApp = await import("https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js");
+                    const firebaseAuth = await import("https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js");
+                    const firebaseFirestore = await import("https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js");
+
+                    const { initializeApp } = firebaseApp;
+                    const { getAuth, onAuthStateChanged, signOut } = firebaseAuth;
+                    const { getFirestore, doc, setDoc, getDoc } = firebaseFirestore;
+
+                    if (firebaseConfig) {
+                        const app = initializeApp(firebaseConfig);
+                        auth = getAuth(app);
+                        db = getFirestore(app);
+                        firebaseAuthFunctions = { onAuthStateChanged, signOut };
+                        firebaseFirestoreFunctions = { doc, setDoc, getDoc };
+                    } else {
+                        console.error("Firebase config missing");
+                        showToast("Firebase configuration missing", "error");
+                    }
+                } catch (err) {
+                    console.error("Firebase initialization error:", err);
+                    showToast("Failed to initialize Firebase", "error");
+                }
+            }
+
+            function normalizeTitle(title) {
+                if (!title || typeof title !== "string") return "";
+                return title.trim().replace(/[\u2018\u2019]/g, "'").replace(/['"]/g, "").replace(/\s+/g, " ");
+            }
+
+            function escapeHTML(str) {
+                if (!str || typeof str !== "string") return "";
+                return str.replace(/&/g, "&amp;")
+                          .replace(/</g, "&lt;")
+                          .replace(/>/g, "&gt;")
+                          .replace(/"/g, "&quot;")
+                          .replace(/'/g, "&#039;");
+            }
+
+            function showToast(message, type = "success") {
+                const toastContainer = document.getElementById("toast-container");
+                if (!toastContainer) {
+                    console.error("Toast container not found");
+                    return;
+                }
+                const toast = document.createElement("div");
+                toast.className = `toast toast-${type}`;
+                toast.textContent = message;
+                toastContainer.appendChild(toast);
+                setTimeout(() => toast.classList.add("show"), 100);
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+
+            function setupDropdown() {
+                const toggleButton = document.querySelector('.dropdown-toggle');
+                const dropdownMenu = document.querySelector('.dropdown-menu');
+                const logoutButton = document.querySelector('.logout-button');
+                const adminLink = document.querySelector('.admin-only');
+                if (toggleButton && dropdownMenu) {
+                    toggleButton.addEventListener('click', () => {
+                        const isExpanded = dropdownMenu.classList.toggle('show');
+                        toggleButton.setAttribute('aria-expanded', isExpanded.toString());
+                    });
+                    document.addEventListener('click', (event) => {
+                        if (!toggleButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                            dropdownMenu.classList.remove('show');
+                            toggleButton.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                }
+                if (logoutButton) {
+                    logoutButton.addEventListener('click', () => {
+                        logout();
+                    });
+                }
+                // Handle admin link visibility
+                if (adminLink && auth && firebaseAuthFunctions.onAuthStateChanged) {
+                    firebaseAuthFunctions.onAuthStateChanged(auth, (user) => {
+                        if (user && user.uid === "R2VZTxDJbURvEzDdQLzbRnEoYuy2") {
+                            adminLink.style.display = "block";
+                        } else {
+                            adminLink.style.display = "none";
+                        }
+                    });
+                }
+            }
+
+            function setupToggleButtons() {
+                const animeToggle = document.getElementById("toggle-anime");
+                const animeList = document.getElementById("anime-list");
+                const apkToggle = document.getElementById("toggle-premium-apks");
+                const apkList = document.getElementById("premium-apk-list");
+                const searchWrapper = document.getElementById("anime-search-wrapper");
+                const searchInput = document.getElementById("anime-search");
+
+                if (animeToggle && animeList && searchWrapper && searchInput) {
+                    animeToggle.addEventListener("change", () => {
+                        const isChecked = animeToggle.checked;
+                        animeList.style.maxHeight = isChecked ? "none" : "0";
+                        animeList.style.opacity = isChecked ? "1" : "0";
+                        animeList.style.visibility = isChecked ? "visible" : "hidden";
+                        searchWrapper.classList.toggle("visible", isChecked);
+                        if (!isChecked) {
+                            searchInput.value = ""; // Clear search when closing
+                            filterAnime(searchInput); // Reset subsections to manual state
+                        }
+                    });
+                }
+                if (apkToggle && apkList) {
+                    apkToggle.addEventListener("change", () => {
+                        apkList.style.maxHeight = apkToggle.checked ? "none" : "0";
+                        apkList.style.opacity = apkToggle.checked ? "1" : "0";
+                        apkList.style.visibility = apkToggle.checked ? "visible" : "hidden";
+                    });
+                }
+            }
+
+            function filterAnime(searchInput) {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const animeLists = document.querySelectorAll(".genre-list");
+
+                animeLists.forEach(genreList => {
+                    const items = genreList.getElementsByTagName("li");
+                    let sectionHasMatch = false;
+
+                    Array.from(items).forEach(item => {
+                        const title = item.querySelector(".text-list")?.textContent.toLowerCase() || "";
+                        const matches = title.includes(searchTerm);
+                        if (matches) {
+                            sectionHasMatch = true;
+                        }
+                        item.style.display = searchTerm === "" ? "flex" : (matches ? "flex" : "none");
+                    });
+
+                    const toggleCheckbox = genreList.previousElementSibling.previousElementSibling; // Assuming toggleInput is two siblings before ul
+                    if (searchTerm === "") {
+                        // When search is cleared, revert to manual toggle state
+                        if (toggleCheckbox.checked) {
+                            genreList.classList.add("manual-open");
+                        } else {
+                            genreList.classList.remove("manual-open");
+                        }
+                        genreList.classList.remove("search-open");
+                    } else {
+                        // During search, apply search-open if there are matches
+                        if (sectionHasMatch) {
+                            genreList.classList.add("search-open");
+                        } else {
+                            genreList.classList.remove("search-open");
+                        }
+                    }
+                });
+
+                // Ensure main list visibility aligns with toggle state
+                const animeToggle = document.getElementById("toggle-anime");
+                const animeList = document.getElementById("anime-list");
+                if (animeToggle && animeList && animeToggle.checked) {
+                    animeList.style.maxHeight = "none";
+                    animeList.style.opacity = "1";
+                    animeList.style.visibility = "visible";
+                }
+            }
+
+            function generateSubsections() {
+                const animeListContainer = document.getElementById("anime-list");
+                if (!animeListContainer) {
+                    showToast("Failed to load anime list", "error");
+                    return;
+                }
+                animeListContainer.innerHTML = '';
+                if (!animeData || !Array.isArray(animeData)) {
+                    showToast("Invalid anime data", "error");
+                    return;
+                }
+                animeData.forEach(section => {
+                    if (!section || !section.animeList || !Array.isArray(section.animeList)) return;
+                    const subsectionDiv = document.createElement("div");
+                    subsectionDiv.className = "subsection";
+
+                    const heading = document.createElement("h3");
+                    heading.className = "subsection-heading";
+                    heading.textContent = section.name || "Unnamed Section";
+                    subsectionDiv.appendChild(heading);
+
+                    const toggleInput = document.createElement("input");
+                    toggleInput.type = "checkbox";
+                    toggleInput.id = `toggle-genre-${section.genreId || Date.now()}`;
+                    toggleInput.className = "toggle-checkbox";
+                    toggleInput.checked = false; // Start collapsed
+                    subsectionDiv.appendChild(toggleInput);
+
+                    const toggleLabel = document.createElement("label");
+                    toggleLabel.setAttribute("for", `toggle-genre-${section.genreId || Date.now()}`);
+                    toggleLabel.className = "toggle-button";
+                    toggleLabel.setAttribute("role", "button");
+                    toggleLabel.setAttribute("tabindex", "0");
+                    toggleLabel.setAttribute("aria-label", `Toggle ${section.name || "Unnamed Section"}`);
+                    subsectionDiv.appendChild(toggleLabel);
+
+                    const ul = document.createElement("ul");
+                    ul.id = `section-list-${section.genreId || Date.now()}`;
+                    ul.className = "genre-list";
+
+                    toggleInput.addEventListener("change", () => {
+                        if (toggleInput.checked) {
+                            ul.classList.add("manual-open");
+                        } else {
+                            ul.classList.remove("manual-open");
+                        }
+                        // Ensure visibility updates immediately when no search is active
+                        const searchInput = document.getElementById("anime-search");
+                        if (searchInput && searchInput.value.trim() === "") {
+                            filterAnime(searchInput);
+                        }
+                    });
+
+                    section.animeList.forEach(anime => {
+                        if (!anime || !anime.title || !anime.watchedTitle) return;
+                        const li = document.createElement("li");
+
+                        const titleSpan = document.createElement("span");
+                        titleSpan.className = "text-list";
+                        titleSpan.textContent = anime.title;
+                        li.appendChild(titleSpan);
+
+                        const watchedButtonGroup = document.createElement("div");
+                        watchedButtonGroup.className = "button-group";
+                        const watchedButton = document.createElement("button");
+                        watchedButton.className = "watched-button";
+                        const cleanWatchedTitle = escapeHTML(anime.watchedTitle);
+                        watchedButton.setAttribute("data-title", cleanWatchedTitle);
+                        watchedButton.setAttribute("aria-label", `Mark ${anime.title} as watched`);
+                        watchedButton.textContent = "Watched";
+                        watchedButton.addEventListener("click", () => {
+                            toggleWatched(cleanWatchedTitle);
+                        });
+                        watchedButtonGroup.appendChild(watchedButton);
+                        li.appendChild(watchedButtonGroup);
+
+                        const downloadButtonGroup = document.createElement("div");
+                        downloadButtonGroup.className = "button-group download-button-group";
+                        let hasDownloadButtons = false;
+
+                        if (anime.downloadLink && anime.downloadLink !== "#" && anime.downloadLink !== "") {
+                            const downloadLinkEn = document.createElement("a");
+                            downloadLinkEn.href = anime.downloadLink;
+                            downloadLinkEn.className = "download-button";
+                            downloadLinkEn.setAttribute("aria-label", `Download ${anime.title} English Dub`);
+                            downloadLinkEn.textContent = "ENDub";
+                            downloadButtonGroup.appendChild(downloadLinkEn);
+                            hasDownloadButtons = true;
+                        }
+
+                        if (anime.downloadLink2 && anime.downloadLink2 !== "#" && anime.downloadLink2 !== "") {
+                            const downloadLinkHi = document.createElement("a");
+                            downloadLinkHi.href = anime.downloadLink2;
+                            downloadLinkHi.className = "download-button";
+                            downloadLinkHi.setAttribute("aria-label", `Download ${anime.title} Hindi Dub`);
+                            downloadLinkHi.textContent = "HiDub";
+                            downloadButtonGroup.appendChild(downloadLinkHi);
+                            hasDownloadButtons = true;
+                        }
+
+                        if (hasDownloadButtons) li.appendChild(downloadButtonGroup);
+
+                        const dubP = document.createElement("p");
+                        dubP.className = "anime-dub";
+                        dubP.innerHTML = `<strong>My opinion: ${anime.myOpinion || "N/A"}</strong>`;
+                        li.appendChild(dubP);
+
+                        const typeP = document.createElement("p");
+                        typeP.className = "anime-type";
+                        typeP.innerHTML = `<strong>Type: ${anime.type || ""}</strong>`;
+                        li.appendChild(typeP);
+
+                        const plotP = document.createElement("p");
+                        plotP.className = "anime-plot";
+                        plotP.innerHTML = `<strong>Plot: ${anime.plot || "N/A"}</strong>`;
+                        li.appendChild(plotP);
+
+                        const mcInfoP = document.createElement("p");
+                        mcInfoP.className = "mc-info";
+                        mcInfoP.innerHTML = `<strong>${anime.mcInfo || "MC: N/A"}</strong>`;
+                        li.appendChild(mcInfoP);
+
+                        const ratingP = document.createElement("p");
+                        ratingP.className = "anime-rating";
+                        ratingP.innerHTML = `<strong>Rating: ${anime.rating || "N/A"}</strong>`;
+                        li.appendChild(ratingP);
+
+                        ul.appendChild(li);
+                    });
+
+                    subsectionDiv.appendChild(ul);
+                    animeListContainer.appendChild(subsectionDiv);
+                });
+            }
+
+            function generatePremiumApkList() {
+                const premiumApkListContainer = document.getElementById("premium-apk-list");
+                if (!premiumApkListContainer) return;
+                premiumApkListContainer.innerHTML = '';
+                if (!premiumApkData || !Array.isArray(premiumApkData)) return;
+                premiumApkData.forEach(apk => {
+                    if (!apk || !apk.title) return;
+                    const apkDiv = document.createElement("div");
+                    apkDiv.className = "apk-item";
+
+                    const titleSpan = document.createElement("span");
+                    titleSpan.className = "apk-title";
+                    titleSpan.textContent = apk.title;
+                    apkDiv.appendChild(titleSpan);
+
+                    const descriptionP = document.createElement("p");
+                    descriptionP.className = "apk-description";
+                    descriptionP.textContent = apk.description || "No description available";
+                    apkDiv.appendChild(descriptionP);
+
+                    const downloadLink = document.createElement("a");
+                    downloadLink.href = apk.downloadLink || "#";
+                    downloadLink.className = "download-button";
+                    downloadLink.setAttribute("aria-label", `Download ${apk.title}`);
+                    downloadLink.textContent = "Download";
+                    apkDiv.appendChild(downloadLink);
+
+                    premiumApkListContainer.appendChild(apkDiv);
+                });
+            }
+
+            async function toggleWatched(title) {
+                const { doc, setDoc, getDoc } = firebaseFirestoreFunctions;
+                if (!title || typeof title !== "string") {
+                    showToast("Error: Invalid title", "error");
+                    return;
+                }
+                const cleanedTitle = title.replace(/[^a-zA-Z0-9\s]/g, "").trim();
+                if (!auth || !db || !doc || !setDoc || !getDoc || !auth.currentUser) {
+                    showToast("Please log in to mark anime as watched", "error");
+                    location.href = "login.html";
+                    return;
+                }
+                const normalizedTitle = normalizeTitle(cleanedTitle);
+                if (!normalizedTitle) {
+                    showToast("Invalid title format", "error");
+                    return;
+                }
+                try {
+                    const docRef = doc(db, "watched", auth.currentUser.uid);
+                    const snap = await getDoc(docRef);
+                    let watchedList = snap.exists() ? snap.data().list || [] : [];
+                    const normalizedWatchedList = watchedList.map(normalizeTitle);
+                    if (normalizedWatchedList.includes(normalizedTitle)) {
+                        watchedList = watchedList.filter(t => normalizeTitle(t) !== normalizedTitle);
+                        showToast(`${title} removed from Watched list`, "success");
+                    } else {
+                        watchedList.push(cleanedTitle);
+                        showToast(`${title} added to watched list`, "success");
+                    }
+                    await setDoc(docRef, { list: watchedList }, { merge: true });
+                    await updateWatchedButtons(auth.currentUser.uid);
+                } catch (err) {
+                    console.error("Toggle watched error:", err);
+                    showToast(`Failed to update watched status: ${err.message}`, "error");
+                }
+            }
+
+            async function updateWatchedButtons(userId) {
+                const { doc, getDoc } = firebaseFirestoreFunctions;
+                if (!db || !doc || !getDoc) {
+                    console.error("Firestore not available for updating watched buttons");
+                    return;
+                }
+                try {
+                    const docRef = doc(db, "watched", userId);
+                    const snap = await getDoc(docRef);
+                    const watchedList = snap.exists() ? snap.data().list || [] : [];
+                    const normalizedWatchedList = watchedList.map(normalizeTitle);
+                    const buttons = document.querySelectorAll(".watched-button");
+                    buttons.forEach(button => {
+                        const title = button.dataset.title;
+                        if (title) {
+                            const isWatched = normalizedWatchedList.includes(normalizeTitle(title));
+                            button.textContent = isWatched ? "Unwatch" : "Watched";
+                            button.style.backgroundColor = isWatched ? "#ff5252" : "#007bff";
+                        }
+                    });
+                } catch (err) {
+                    console.error("Update watched buttons error:", err);
+                }
+            }
+
+            async function initializeWatchedDocument(uid) {
+                const { doc, setDoc, getDoc } = firebaseFirestoreFunctions;
+                if (!db || !doc || !setDoc) {
+                    console.error("Firestore not initialized for watched document");
+                    return;
+                }
+                try {
+                    const docRef = doc(db, "watched", uid);
+                    const snap = await getDoc(docRef);
+                    if (!snap.exists()) {
+                        await setDoc(docRef, { list: [] });
+                    }
+                } catch (err) {
+                    console.error("Initialize watched document error:", err);
+                }
+            }
+
+            function logout() {
+                const { signOut } = firebaseAuthFunctions;
+                if (!auth || !signOut) {
+                    showToast("Logout failed: Authentication not initialized", "error");
+                    return;
+                }
+                signOut(auth).then(() => {
+                    showToast("Logged out successfully", "success");
+                    location.href = "login.html";
+                }).catch(err => {
+                    showToast(`Logout failed: ${err.message}`, "error");
+                    console.error("Logout error:", err);
+                });
+            }
+
+            async function initialize() {
+                try {
+                    await loadModules();
+                    await initFirebase();
+                    setupDropdown();
+                    setupToggleButtons();
+                    generateSubsections();
+                    generatePremiumApkList();
+
+                    const searchInput = document.getElementById("anime-search");
+                    if (searchInput) {
+                        searchInput.addEventListener("input", () => filterAnime(searchInput));
+                    }
+
+                    const { onAuthStateChanged } = firebaseAuthFunctions;
+                    if (auth && onAuthStateChanged) {
+                        onAuthStateChanged(auth, user => {
+                            if (!user) {
+                                location.href = "login.html";
+                            } else {
+                                initializeWatchedDocument(user.uid).then(() => updateWatchedButtons(user.uid));
+                            }
+                        });
+                    } else {
+                        console.error("Auth or onAuthStateChanged not available");
+                        showToast("Authentication not available, please log in", "error");
+                        location.href = "login.html";
+                    }
+                } catch (err) {
+                    console.error("Initialization error:", err);
+                    showToast("Failed to initialize app", "error");
+                }
+            }
+
+            if (document.readyState === "complete" || document.readyState === "interactive") {
+                initialize();
+            } else {
+                document.addEventListener("DOMContentLoaded", initialize);
+                window.addEventListener("load", initialize);
+            }
+        } catch (err) {
+            console.error("Script error:", err);
+        }
+    </script>
 </body>
 </html>

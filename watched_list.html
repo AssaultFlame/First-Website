@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watched List - Coolboy Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+</head>
+<body>
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <header>
+        <!-- Dropdown menu for navigation -->
+        <div class="dropdown">
+            <button class="dropdown-toggle" aria-expanded="false" aria-controls="dropdown-menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="index.html" class="dropdown-item"><i class="fas fa-home"></i> Home</a>
+                <a href="watched_list.html" class="dropdown-item"><i class="fas fa-list"></i> Watched List</a>
+                <a href="contact.html" class="dropdown-item"><i class="fas fa-envelope"></i> Contact</a> <!-- Added Contact link -->
+                <button class="dropdown-item logout-button" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </div>
+        <h1>Watched List</h1>
+    </header>
+    <main>
+        <div class="main-section">
+            <h2 class="section-heading">User Profile</h2>
+            <p><strong>Username:</strong> <span id="username"></span></p>
+        </div>
+        <div class="user-watched-section">
+            <h4>Everyone's Watched Anime Lists</h4>
+            <div id="all-watched-lists"></div>
+        </div>
+    </main>
+    <footer>
+        <p>© 2025 Coolboy's Website</p>
+    </footer>
+    <script type="module">
+        import { firebaseConfig } from "./firebase-config.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+        import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+
+        // Initialize Firebase
+        let app, auth, db;
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+        } catch (err) {
+            showToast("Failed to initialize Firebase. Please check your connection.", "error");
+        }
+
+        // Dropdown menu setup
+        function setupDropdown() {
+            const toggleButton = document.querySelector('.dropdown-toggle');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            if (toggleButton && dropdownMenu) {
+                toggleButton.addEventListener('click', () => {
+                    const isExpanded = dropdownMenu.classList.toggle('show');
+                    toggleButton.setAttribute('aria-expanded', isExpanded.toString());
+                });
+                document.addEventListener('click', (event) => {
+                    if (!toggleButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                        dropdownMenu.classList.remove('show');
+                        toggleButton.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+        }
+
+        function showToast(message, type = "success") {
+            const toastContainer = document.getElementById("toast-container");
+            if (!toastContainer) return;
+            const toast = document.createElement("div");
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add("show");
+            }, 100);
+
+            setTimeout(() => {
+                toast.classList.remove("show");
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        onAuthStateChanged(auth, async user => {
+            if (!user) {
+                location.href = "login.html";
+            } else {
+                const username = user.displayName || "N/A";
+                document.getElementById("username").textContent = username;
+
+                const allWatchedListsElement = document.getElementById("all-watched-lists");
+                try {
+                    const watchedSnapshot = await getDocs(collection(db, "watched"));
+
+                    if (watchedSnapshot.empty) {
+                        const p = document.createElement("p");
+                        p.textContent = "No users have watched any anime yet.";
+                        p.classList.add("empty-message");
+                        allWatchedListsElement.appendChild(p);
+                        return;
+                    }
+
+                    let hasWatchedAnime = false;
+
+                    for (const watchedDoc of watchedSnapshot.docs) {
+                        const uid = watchedDoc.id;
+                        const watchedList = watchedDoc.data().list || [];
+
+                        if (watchedList.length === 0) {
+                            continue;
+                        }
+
+                        hasWatchedAnime = true;
+
+                        const userDoc = await getDoc(doc(db, "users", uid));
+                        const userName = userDoc.exists() ? userDoc.data().username || "Unknown User" : "Unknown User";
+
+                        const userSection = document.createElement("div");
+                        userSection.classList.add("user-watched-list");
+
+                        const userHeading = document.createElement("h5");
+                        userHeading.textContent = `${userName}'s Watched List`;
+                        userSection.appendChild(userHeading);
+
+                        const ul = document.createElement("ul");
+                        ul.classList.add("watched-list");
+
+                        watchedList.forEach(item => {
+                            const li = document.createElement("li");
+                            li.textContent = item;
+                            ul.appendChild(li);
+                        });
+
+                        userSection.appendChild(ul);
+                        allWatchedListsElement.appendChild(userSection);
+                    }
+
+                    if (!hasWatchedAnime) {
+                        const p = document.createElement("p");
+                        p.textContent = "No users have watched any anime yet.";
+                        p.classList.add("empty-message");
+                        allWatchedListsElement.appendChild(p);
+                    }
+                } catch (err) {
+                    const p = document.createElement("p");
+                    p.textContent = "Unable to load watched lists due to an error. Please check your connection or Firestore rules.";
+                    p.classList.add("empty-message");
+                    allWatchedListsElement.appendChild(p);
+                }
+            }
+        });
+
+        window.logout = function () {
+            if (!auth) {
+                showToast("Logout failed: Authentication not initialized.", "error");
+                return;
+            }
+            signOut(auth).then(() => {
+                showToast("Logged out successfully!", "success");
+                location.href = "login.html";
+            }).catch(err => {
+                showToast(`Logout failed: ${err.message}`, "error");
+            });
+        };
+
+        // Initialize dropdown on page load
+        window.addEventListener("DOMContentLoaded", () => {
+            setupDropdown();
+        });
+    </script>
+</body>
+</html>

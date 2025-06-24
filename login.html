@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Login - Coolboy Hub</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+</head>
+<body>
+    <header>
+        <!-- Dropdown menu for navigation -->
+        <div class="dropdown">
+            <button class="dropdown-toggle" aria-expanded="false" aria-controls="dropdown-menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="index.html" class="dropdown-item"><i class="fas fa-home"></i> Home</a>
+                <a href="watched_list.html" class="dropdown-item"><i class="fas fa-list"></i> Watched List</a>
+                <button class="dropdown-item logout-button" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </div>
+        <h1>Login / Register</h1>
+    </header>
+    <main>
+        <!-- Login Form -->
+        <div class="main-section">
+            <h2 class="section-heading">Login</h2>
+            <div class="auth-form">
+                <div class="input-container">
+                    <input type="email" id="login-email" placeholder="Email" required class="auth-input"/>
+                </div>
+                <div class="password-container">
+                    <input type="password" id="login-password" placeholder="Password" required class="auth-input"/>
+                    <button type="button" class="toggle-password" onclick="togglePassword('login-password')">Show</button>
+                </div>
+                <button class="login-button" onclick="login()">Login</button>
+                <p id="login-msg" class="error-message"></p>
+            </div>
+        </div>
+        <!-- Register Form -->
+        <div class="main-section">
+            <h2 class="section-heading">Register</h2>
+            <div class="auth-form">
+                <div class="input-container">
+                    <input type="text" id="register-username" placeholder="Username" required class="auth-input"/>
+                </div>
+                <div class="input-container">
+                    <input type="email" id="register-email" placeholder="Email" required class="auth-input"/>
+                </div>
+                <div class="password-container">
+                    <input type="password" id="register-password" placeholder="Password" required class="auth-input"/>
+                    <button type="button" class="toggle-password" onclick="togglePassword('register-password')">Show</button>
+                </div>
+                <button class="register-button" onclick="register()">Register</button>
+                <p id="register-msg" class="error-message"></p>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>© 2025 Coolboy's Website</p>
+    </footer>
+    <script type="module">
+        import { firebaseConfig } from "./firebase-config.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+        import {
+            getAuth,
+            signInWithEmailAndPassword,
+            createUserWithEmailAndPassword,
+            signOut,
+            updateProfile
+        } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Dropdown menu setup
+        function setupDropdown() {
+            const toggleButton = document.querySelector('.dropdown-toggle');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            if (toggleButton && dropdownMenu) {
+                toggleButton.addEventListener('click', () => {
+                    const isExpanded = dropdownMenu.classList.toggle('show');
+                    toggleButton.setAttribute('aria-expanded', isExpanded.toString());
+                });
+                document.addEventListener('click', (event) => {
+                    if (!toggleButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                        dropdownMenu.classList.remove('show');
+                        toggleButton.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+        }
+
+        function validateEmailAndPassword(email, password, msgElement) {
+            if (!email || !password) {
+                msgElement.textContent = "Please fill in all fields.";
+                return false;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                msgElement.textContent = "Please enter a valid email address.";
+                return false;
+            }
+
+            if (password.length < 6) {
+                msgElement.textContent = "Password must be at least 6 characters long.";
+                return false;
+            }
+
+            return true;
+        }
+
+        window.login = async function () {
+            const email = document.getElementById("login-email").value.trim();
+            const password = document.getElementById("login-password").value;
+            const msg = document.getElementById("login-msg");
+
+            if (!validateEmailAndPassword(email, password, msg)) return;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                msg.classList.remove("error-message");
+                msg.classList.add("success-message");
+                msg.textContent = "Login successful! Redirecting...";
+                setTimeout(() => {
+                    location.href = "index.html";
+                }, 1000);
+            } catch (err) {
+                if (err.code === "auth/invalid-credential" || err.code === "auth/wrong-password" || err.code === "auth/user-not-found") {
+                    msg.textContent = "Invalid email or password. Please try again or register.";
+                } else if (err.code === "auth/invalid-email") {
+                    msg.textContent = "Invalid email format.";
+                } else if (err.code === "auth/too-many-requests") {
+                    msg.textContent = "Too many login attempts. Please try again later.";
+                } else {
+                    msg.textContent = `Login failed: ${err.message}`;
+                }
+            }
+        };
+
+        window.register = async function () {
+            const username = document.getElementById("register-username").value.trim();
+            const email = document.getElementById("register-email").value.trim();
+            const password = document.getElementById("register-password").value;
+            const msg = document.getElementById("register-msg");
+
+            if (!username) {
+                msg.textContent = "Please enter a username.";
+                return;
+            }
+
+            if (!validateEmailAndPassword(email, password, msg)) return;
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                await updateProfile(user, { displayName: username });
+
+                await setDoc(doc(db, "users", user.uid), {
+                    username: username,
+                    email: email,
+                    createdAt: new Date()
+                });
+
+                await setDoc(doc(db, "watched", user.uid), { list: [] });
+
+                msg.classList.remove("error-message");
+                msg.classList.add("success-message");
+                msg.textContent = "Registration successful! Redirecting...";
+                setTimeout(() => {
+                    location.href = "index.html";
+                }, 1000);
+            } catch (err) {
+                if (err.code === "auth/email-already-in-use") {
+                    msg.textContent = "This email is already registered. Please log in instead.";
+                } else if (err.code === "auth/invalid-email") {
+                    msg.textContent = "Invalid email format.";
+                } else if (err.code === "auth/weak-password") {
+                    msg.textContent = "Password is too weak. It must be at least 6 characters long.";
+                } else {
+                    msg.textContent = `Registration failed: ${err.message}`;
+                }
+            }
+        };
+
+        // Logout function
+        window.logout = function () {
+            if (!auth) {
+                document.getElementById("login-msg").textContent = "Logout failed: Authentication not initialized.";
+                return;
+            }
+            signOut(auth).then(() => {
+                document.getElementById("login-msg").textContent = "Logged out successfully!";
+                setTimeout(() => {
+                    location.href = "login.html";
+                }, 1000);
+            }).catch(err => {
+                document.getElementById("login-msg").textContent = `Logout failed: ${err.message}`;
+            });
+        };
+
+        // Toggle password visibility
+        window.togglePassword = function (inputId) {
+            const passwordInput = document.getElementById(inputId);
+            const toggleButton = passwordInput.nextElementSibling; // Get the adjacent toggle button
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleButton.textContent = "Hide";
+            } else {
+                passwordInput.type = "password";
+                toggleButton.textContent = "Show";
+            }
+        };
+
+        // Initialize dropdown on page load
+        window.addEventListener("DOMContentLoaded", () => {
+            setupDropdown();
+        });
+    </script>
+</body>
+</html>
